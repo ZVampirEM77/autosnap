@@ -17,3 +17,4 @@ class Config(object):
         port = autosnap_conf.getint('global', 'port')
         debug_interval = autosnap_conf.getint('global', 'debug_interval')
         flush_queue_interval = autosnap_conf.getint('global', 'flush_queue_interval')
+        snapshot_prefix = autosnap_conf.get('global', 'snapshot_prefix')
