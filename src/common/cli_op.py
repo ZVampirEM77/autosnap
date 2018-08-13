@@ -1,4 +1,5 @@
 import logging
+import json
 import subprocess
 
 _LOG = logging.getLogger(__name__)
@@ -16,9 +17,15 @@ class CliOp(object):
             else:
                 result = rc.stdout.strip()
 
-            if not result:
-                _LOG.debug('<cli_op>: %s --> successfully', ' '.join(args))
+            try:
+                return json.loads(result)
+            except ValueError:
+                if not result:
+                    _LOG.debug('<cli_op>: %s --> successfully', ' '.join(args))
+                    result = 'success'
         else:
             _LOG.debug('<cli_op>: %s --> failed, return_code = %d, return_msg = %s' \
                        % (' '.join(args), rc.returncode, rc.stderr.strip()))
+            result = 'failed'
 
+        return {'result': result}
