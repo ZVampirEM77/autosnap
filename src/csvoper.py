@@ -1,5 +1,6 @@
 import csv
 import os
+import copy
 
 FIELD_NAME = ['image_name', 'pool_name', 'snapshot_period', \
                     'retain_period', 'last_snapshot']
@@ -55,9 +56,10 @@ class CSVOper(object):
         for ele in op_list:
             if ele['image_name'] == entry['image_name'] and \
                     ele['pool_name'] == entry['pool_name']:
-                        ele = entry
+                        ele['snapshot_period'] = entry['snapshot_period']
+                        ele['retain_period'] = entry['retain_period']
                         updated = True
-        
+
         if updated:
             with open(file_name, 'w') as wf:
                 w_csv = csv.DictWriter(wf, fieldnames = FIELD_NAME)
