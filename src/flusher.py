@@ -1,5 +1,6 @@
 import threading
 import time
+import datetime
 from csvoper import CSVOper
 from common.shop_queue import ShopQueue
 
@@ -14,10 +15,12 @@ class Flusher(threading.Thread):
             print ("in flusher get queue {} {}".format(type(ele), ele))
             req_type = ele.pop('type')
             if req_type == 'add':
+                ele['last_snapshot'] = '-'
                 if not CSVOper.writerow(ele):
                     #logging
                     pass
             elif req_type == 'update':
+                ele['last_snapshot'] = '-'
                 if not CSVOper.updaterow(ele):
                     print ("csv update failed")
                     #logging

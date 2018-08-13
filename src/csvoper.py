@@ -58,6 +58,8 @@ class CSVOper(object):
                     ele['pool_name'] == entry['pool_name']:
                         ele['snapshot_period'] = entry['snapshot_period']
                         ele['retain_period'] = entry['retain_period']
+                        if entry['last_snapshot'] != '-':
+                            ele['last_snapshot'] = entry['last_snapshot']
                         updated = True
 
         if updated:
