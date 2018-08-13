@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import os
 import sys
 import threading
 import queue
@@ -15,7 +16,7 @@ from cephoper.ceph_snapshot_op import CephSnaper
 from httpserver.snapshot_http_server import SnapshotHttpServer, SnapshotHttpServerHandler
 
 snapshot_http_server = None
-CONF_FILE = '/home/enming/autosnap/autosnap.conf'
+CONF_FILE = os.path.abspath(os.path.join(os.getcwd(), "..")) + '/autosnap.conf'
 
 def stop_service(signum, frame):
     current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
