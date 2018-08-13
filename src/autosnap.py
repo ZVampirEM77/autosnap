@@ -52,7 +52,10 @@ def main():
             flush_thread_running = True
             flush_start_time = now
 
-        if now.minute == 0 or (now - snap_start_time).seconds >= 3600:
+        snapshot_time_interval = (now - snap_start_time).seconds
+        if (Config.debug_interval != -1 and snapshot_time_interval >= Config.debug_interval) or \
+           now.minute == 0 or snapshot_time_interval >= 3600:
+            snapshot_thread = CephSnaper()
             snapshot_thread.start()
             snapshot_thread_running = True
             snap_start_time = now
