@@ -3,7 +3,7 @@ import os
 import copy
 
 FIELD_NAME = ['image_name', 'pool_name', 'snapshot_period', \
-                    'retain_period', 'last_snapshot']
+                    'retain_period', 'retain_count', 'last_snapshot']
 
 class CSVOper(object):
     @classmethod
@@ -40,7 +40,7 @@ class CSVOper(object):
                 w_csv = csv.writer(wf)
                 w_csv.writerow([entry['image_name'], entry['pool_name'], \
                         entry['snapshot_period'], entry['retain_period'], \
-                        entry['last_snapshot']])
+                        entry['retain_count'], entry['last_snapshot']])
 
         return write_success
 
@@ -58,6 +58,7 @@ class CSVOper(object):
                     ele['pool_name'] == entry['pool_name']:
                         ele['snapshot_period'] = entry['snapshot_period']
                         ele['retain_period'] = entry['retain_period']
+                        ele['retain_count'] = entry['retain_count']
                         if entry['last_snapshot'] != '-':
                             ele['last_snapshot'] = entry['last_snapshot']
                         updated = True
