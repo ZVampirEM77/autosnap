@@ -16,9 +16,9 @@ class CephSnaper(threading.Thread):
         need_snapshot_images = CSVOper.read()
         for image in need_snapshot_images:
             if Config.debug_interval != -1:
-                snapshot_period = image['snapshot_period'] * Config.debug_interval
+                snapshot_period = int(image['snapshot_period']) * Config.debug_interval
             else:
-                snapshot_period = image['snapshot_period'] * 3600
+                snapshot_period = int(image['snapshot_period']) * 3600
 
             last_snapshot = image['last_snapshot']
             last = datetime.strptime(last_snapshot, '%Y-%m-%d %H:%M')
