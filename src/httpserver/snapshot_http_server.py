@@ -45,13 +45,11 @@ class SnapshotHttpServerHandler(BaseHTTPRequestHandler):
                         'retain_period': image['retain_period'],
                         'retain_count': image['retain_count']}
             response = json.dumps(response_dict)
-            self.send_header('Content-Length', len(response))
-            self.end_headers()
-            self.wfile.write(response.encode('utf-8'))
         else:
-            self.send_header('Content-Length', '5')
-            self.end_headers()
-            self.wfile.write("False".encode('utf-8'))
+            response = json.dumps({'enabled_status': 'False'})
+        self.send_header('Content-Length', len(response))
+        self.end_headers()
+        self.wfile.write(response.encode('utf-8'))
 
 
     def do_POST(self):
