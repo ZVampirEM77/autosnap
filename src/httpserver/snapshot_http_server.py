@@ -2,6 +2,7 @@
 
 import sys
 import re
+import json
 
 if sys.version_info >= (3, 0):
     from socketserver import ThreadingMixIn
@@ -24,6 +25,9 @@ class SnapshotHttpServerHandler(BaseHTTPRequestHandler):
     # for debug
     def do_GET(self):
         enabled = False
+        snapshot_period = '-'
+        retain_period = '-'
+        retain_count = '-'
         if '/enable_query' in self.path:
             match_obj = re.match('/enable_query\/(.*)\/(.*)', self.path)
             req_pool = match_obj.group(1)
@@ -33,11 +37,17 @@ class SnapshotHttpServerHandler(BaseHTTPRequestHandler):
             for image in current_enable_images:
                 if image['image_name'] == req_image and image['pool_name'] == req_pool:
                     enabled = True
+
         self.send_response(200)
         if enabled:
-            self.send_header('Content-Length', '4')
+            response_dict = {'enabled_status': "True",
+                        'snapshot_period': image['snapshot_period'],
+                        'retain_period': image['retain_period'],
+                        'retain_count': image['retain_count']}
+            response = json.dumps(response_dict)
+            self.send_header('Content-Length', len(response))
             self.end_headers()
-            self.wfile.write("True".encode('utf-8'))
+            self.wfile.write(response.encode('utf-8'))
         else:
             self.send_header('Content-Length', '5')
             self.end_headers()
