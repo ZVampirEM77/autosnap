@@ -40,7 +40,7 @@ class SnapshotHttpServerHandler(BaseHTTPRequestHandler):
 
         self.send_response(200)
         if enabled:
-            response_dict = {'enabled_status': "True",
+            response_dict = {'enabled_status': 'True',
                         'snapshot_period': image['snapshot_period'],
                         'retain_period': image['retain_period'],
                         'retain_count': image['retain_count']}
