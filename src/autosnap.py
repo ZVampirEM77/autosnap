@@ -26,11 +26,17 @@ def stop_service(signum, frame):
     sys.exit(0)
 
 def main():
+    # read start mode from command line
+    # -r means restart the service
+    # -n means start a new service
+    start_mode = '-n'
+    if len(sys.argv) >= 2:
+        start_mode = sys.argv[1]
+    if start_mode == '-n':
+        if not CSVOper.create():
+            sys.exit(-1)
+
     Config.Parse(CONF_FILE)
-
-    if not CSVOper.create():
-        sys.exit(-1)
-
     global snapshot_http_server
     snapshot_http_server = SnapshotHttpServer((Config.ip, Config.port), SnapshotHttpServerHandler)
     server_thread = threading.Thread(target = snapshot_http_server.serve_forever)
