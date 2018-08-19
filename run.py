@@ -9,14 +9,14 @@ import time
 import signal
 from datetime import datetime
 
-from common.config import Config
-from flusher import Flusher
-from csvoper import CSVOper
-from cephoper.ceph_snapshot_op import CephSnaper
-from httpserver.snapshot_http_server import SnapshotHttpServer, SnapshotHttpServerHandler
+from autosnap.common.config import Config
+from autosnap.flusher import Flusher
+from autosnap.csvoper import CSVOper
+from autosnap.cephoper.ceph_snapshot_op import CephSnaper
+from autosnap.httpserver.snapshot_http_server import SnapshotHttpServer, SnapshotHttpServerHandler
 
 snapshot_http_server = None
-CONF_FILE = os.path.abspath(os.path.join(os.getcwd(), "..")) + '/autosnap.conf'
+CONF_FILE = os.path.abspath(os.getcwd()) + '/autosnap.conf'
 
 def stop_service(signum, frame):
     current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))

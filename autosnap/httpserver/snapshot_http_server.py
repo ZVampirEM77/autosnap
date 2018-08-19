@@ -11,8 +11,8 @@ else:
     from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
     from SocketServer import ThreadingMixIn
 
-from csvoper import CSVOper
-from common.shop_queue import ShopQueue
+from autosnap.csvoper import CSVOper
+from autosnap.common.shop_queue import ShopQueue
 
 
 class SnapshotHttpServer(ThreadingMixIn, HTTPServer):

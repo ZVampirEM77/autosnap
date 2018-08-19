@@ -1,8 +1,8 @@
 import threading
 import time
 import datetime
-from csvoper import CSVOper
-from common.shop_queue import ShopQueue
+from autosnap.csvoper import CSVOper
+from autosnap.common.shop_queue import ShopQueue
 
 class Flusher(threading.Thread):
     def __init__(self):

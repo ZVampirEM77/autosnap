@@ -1,9 +1,9 @@
 import threading
 from operator import itemgetter
 from datetime import datetime
-from csvoper import CSVOper
-from common.config import Config
-from common.cli_op import CliOp
+from autosnap.csvoper import CSVOper
+from autosnap.common.config import Config
+from autosnap.common.cli_op import CliOp
 
 SNAP_CMD = {
     'create': 'rbd snap create {pool_name}/{image_name}@{snap_name}',
