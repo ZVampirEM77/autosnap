@@ -18,6 +18,13 @@ from autosnap.httpserver.snapshot_http_server import SnapshotHttpServer, Snapsho
 snapshot_http_server = None
 CONF_FILE = os.path.abspath(os.getcwd()) + '/autosnap.conf'
 
+_LOG = logging.getLogger(__name__)
+formatter = logging.Formatter('%(asctime)s %(name)-20s %(levelname)-8s %(message)s')
+file_handler = logging.FileHandler("autosnap.log")
+file_handler.setFormatter(formatter)
+_LOG.addHandler(file_handler)
+_LOG.setLevel(logging.INFO)
+
 def stop_service(signum, frame):
     current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
     print("The autosnap service is stoped at {}".format(current_time))
@@ -32,6 +39,7 @@ def main():
     start_mode = '-n'
     if len(sys.argv) >= 2:
         start_mode = sys.argv[1]
+    _LOG.info('Start autosnap with the mode: {}'.format(start_mode))
     if start_mode == '-n':
         if not CSVOper.create():
             sys.exit(-1)
@@ -42,6 +50,7 @@ def main():
     server_thread = threading.Thread(target = snapshot_http_server.serve_forever)
     server_thread.setDaemon(True)
     server_thread.start()
+    _LOG.info('Start Snapshot HTTPServer')
 
     signal.signal(signal.SIGINT, stop_service)
 

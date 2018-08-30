@@ -3,6 +3,7 @@
 import sys
 import re
 import json
+import logging
 
 if sys.version_info >= (3, 0):
     from socketserver import ThreadingMixIn
@@ -14,6 +15,7 @@ else:
 from autosnap.csvoper import CSVOper
 from autosnap.common.shop_queue import ShopQueue
 
+_LOG = logging.getLogger('__main__.' + __name__)
 
 class SnapshotHttpServer(ThreadingMixIn, HTTPServer):
     pass
