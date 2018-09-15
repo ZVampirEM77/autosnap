@@ -27,11 +27,16 @@ class CephSnaper(threading.Thread):
                     continue
                 ordered_snap_list = sorted(unordered_snap_list, key=itemgetter('id'))
                 if image['retain_count'] != '-':
-                    if len(ordered_snap_list) >= int(image['retain_count']):
-                        for i in range(len(ordered_snap_list) - int(image['retain_count']) + 1):
+                    autosnap_list = []
+                    for snap in ordered_snap_list:
+                        if Config.snapshot_prefix in snap['name']:
+                            autosnap_list.append(snap)
+
+                    if len(autosnap_list) >= int(image['retain_count']):
+                        for i in range(len(autosnap_list) - int(image['retain_count']) + 1):
                             delete_args = SNAP_CMD['delete'].format(pool_name = image['pool_name'],
                                                                     image_name = image['image_name'],
-                                                                    snap_name = ordered_snap_list[i]['name'])
+                                                                    snap_name = autosnap_list[i]['name'])
                             CliOp.cli_op(delete_args.split(' '))
                         # TODO enming need add error processing
 
