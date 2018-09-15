@@ -7,7 +7,7 @@ FIELD_NAME = ['image_name', 'pool_name', 'snapshot_period', \
 
 class CSVOper(object):
     @classmethod
-    def create(cls, file_name = '../image_info.csv'):
+    def create(cls, file_name = 'image_info.csv'):
         if os.path.exists(file_name):
             os.remove(file_name)
         os.mknod(file_name)
@@ -17,7 +17,7 @@ class CSVOper(object):
         return True
 
     @classmethod
-    def read(cls, file_name = '../image_info.csv'):
+    def read(cls, file_name = 'image_info.csv'):
         with open(file_name, 'r') as f:
             res = []
             r_csv = csv.DictReader(f)
@@ -26,7 +26,7 @@ class CSVOper(object):
             return res
 
     @classmethod
-    def writerow(cls, entry, file_name = '../image_info.csv'):
+    def writerow(cls, entry, file_name = 'image_info.csv'):
         write_success = True
         with open(file_name, 'r') as rf:
             r_csv = csv.DictReader(rf)
@@ -45,7 +45,7 @@ class CSVOper(object):
         return write_success
 
     @classmethod
-    def updaterow(cls, entry, file_name = '../image_info.csv'):
+    def updaterow(cls, entry, file_name = 'image_info.csv'):
         op_list = []
         updated = False
         with open(file_name, 'r') as rf:
@@ -72,7 +72,7 @@ class CSVOper(object):
         return updated
 
     @classmethod
-    def deleterow(cls, entry, file_name = '../image_info.csv'):
+    def deleterow(cls, entry, file_name = 'image_info.csv'):
         op_list = []
         deleted = False
         with open(file_name, 'r') as rf:
