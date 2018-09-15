@@ -39,19 +39,26 @@ class SnapshotHttpServerHandler(BaseHTTPRequestHandler):
             for image in current_enable_images:
                 if image['image_name'] == req_image and image['pool_name'] == req_pool:
                     enabled = True
+                    break
 
-        self.send_response(200)
-        if enabled:
-            response_dict = {'enabled_status': 'True',
-                        'snapshot_period': image['snapshot_period'],
-                        'retain_period': image['retain_period'],
-                        'retain_count': image['retain_count']}
-            response = json.dumps(response_dict)
+            self.send_response(200)
+            if enabled:
+                response_dict = {'enabled_status': 'True',
+                            'snapshot_period': image['snapshot_period'],
+                            'retain_period': image['retain_period'],
+                            'retain_count': image['retain_count']}
+                response = json.dumps(response_dict)
+            else:
+                response = json.dumps({'enabled_status': 'False'})
+            self.send_header('Content-Length', len(response))
+            self.end_headers()
+            self.wfile.write(response.encode('utf-8'))
         else:
-            response = json.dumps({'enabled_status': 'False'})
-        self.send_header('Content-Length', len(response))
-        self.end_headers()
-        self.wfile.write(response.encode('utf-8'))
+            self.send_response(400)
+            response = json.dumps({'error_msg': 'Bad Request!'})
+            self.send_header('Content-Length', len(response))
+            self.end_headers()
+            self.wfile.write(response.encode('utf-8'))
 
 
     def do_POST(self):
