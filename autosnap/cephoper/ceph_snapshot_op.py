@@ -23,7 +23,7 @@ class CephSnaper(threading.Thread):
                 list_args = SNAP_CMD['list'].format(pool_name = image['pool_name'],
                                                     image_name = image['image_name'])
                 unordered_snap_list = CliOp.cli_op(list_args.split(' '))
-                if len(unordered_snap_list) <= 0 or type(unordered_snap_list) != type([]):
+                if len(unordered_snap_list) < 0 or type(unordered_snap_list) != type([]):
                     continue
                 ordered_snap_list = sorted(unordered_snap_list, key=itemgetter('id'))
                 if image['retain_count'] != '-':
