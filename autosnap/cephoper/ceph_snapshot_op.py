@@ -13,7 +13,7 @@ SNAP_CMD = {
 
 class CephSnaper(threading.Thread):
     def __init__(self):
-        super().__init__()
+        threading.Thread.__init__(self)
 
     def run(self):
         need_snapshot_images = CSVOper.read()

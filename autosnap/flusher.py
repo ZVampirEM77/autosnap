@@ -9,7 +9,7 @@ _LOG = logging.getLogger('__main__.' + __name__)
 
 class Flusher(threading.Thread):
     def __init__(self):
-        super().__init__()
+        threading.Thread.__init__(self)
 
     def run(self):
         while not ShopQueue.shop_queue.empty():
