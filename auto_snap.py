@@ -3,11 +3,15 @@
 import os
 import sys
 import threading
-import queue
 import logging
 import time
 import signal
 from datetime import datetime
+
+try:
+    import queue
+except ImportError:
+    import Queue as queue
 
 from autosnap.common.config import Config
 from autosnap.flusher import Flusher
