@@ -20,11 +20,12 @@ from autosnap.cephoper.ceph_snapshot_op import CephSnaper
 from autosnap.httpserver.snapshot_http_server import SnapshotHttpServer, SnapshotHttpServerHandler
 
 snapshot_http_server = None
-CONF_FILE = os.path.abspath(os.getcwd()) + '/autosnap.conf'
+#CONF_FILE = os.path.abspath(os.getcwd()) + '/autosnap.conf'
+CONF_FILE = '/etc/autosnap/autosnap.conf'
 
 _LOG = logging.getLogger(__name__)
 formatter = logging.Formatter('%(asctime)s %(name)-20s %(levelname)-8s %(message)s')
-file_handler = logging.FileHandler("autosnap.log")
+file_handler = logging.FileHandler("/var/log/autosnap.log")
 file_handler.setFormatter(formatter)
 _LOG.addHandler(file_handler)
 _LOG.setLevel(logging.INFO)
