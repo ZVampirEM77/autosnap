@@ -1,3 +1,4 @@
+import sys
 import threading
 import time
 import datetime
@@ -13,8 +14,11 @@ class Flusher(threading.Thread):
 
     def run(self):
         while not ShopQueue.shop_queue.empty():
-            # bytes --> string --> dict
-            ele = eval(str(ShopQueue.shop_queue.get(), encoding = 'utf-8'))
+            if sys.version_info >= (3, 0):
+                # bytes --> string --> dict
+                ele = eval(str(ShopQueue.shop_queue.get(), encoding = 'utf-8'))
+            else:
+                ele = eval(str(ShopQueue.shop_queue.get()))
             req_type = ele.pop('type')
             _LOG.info('Get queue {} {}, request type is {}'.format(type(ele), ele, req_type))
             if req_type == 'add':

@@ -1,3 +1,4 @@
+import sys
 import logging
 import json
 import subprocess
@@ -8,14 +9,27 @@ class CliOp(object):
     @classmethod
     def cli_op(cls, args):
         _LOG.debug('<cli_op>: %s', ' '.join(args))
-        rc = subprocess.run(args, stdout=subprocess.PIPE, \
-                stderr=subprocess.PIPE, encoding='utf-8')
+        rc = None
+        if sys.version_info >= (3, 0):
+            rc = subprocess.run(args, stdout=subprocess.PIPE, \
+                                stderr=subprocess.PIPE, encoding='utf-8')
+        else:
+            rc = subprocess.Popen(args, stdout=subprocess.PIPE, \
+                                  stderr=subprocess.PIPE)
 
         if not rc.returncode:
-            if rc.stderr and not rc.stdout:
-                result = rc.stderr.strip()
+            if sys.version_info >= (3, 0):
+                if rc.stderr and not rc.stdout:
+                    result = rc.stderr.strip()
+                else:
+                    result = rc.stdout.strip()
             else:
-                result = rc.stdout.strip()
+                stdout = rc.stdout.read()
+                stderr = rc.stderr.read()
+                if stderr and not stdout:
+                    result = stderr.strip()
+                else:
+                    result = stdout.strip()
 
             try:
                 return json.loads(result)
