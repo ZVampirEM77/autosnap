@@ -16,6 +16,7 @@ class CliOp(object):
         else:
             rc = subprocess.Popen(args, stdout=subprocess.PIPE, \
                                   stderr=subprocess.PIPE)
+            rc.wait()
 
         if not rc.returncode:
             if sys.version_info >= (3, 0):
