@@ -24,7 +24,7 @@ CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
 %install
 %{__python} setup.py install --skip-build --root %{buildroot} --install-scripts %{_bindir}
 mkdir -p %{buildroot}%{_unitdir}
-install -m 0644 %{_unitdir}/autosnap.service %{buildroot}%{_unitdir}
+install -m 0644 ./systemd/autosnap.service %{buildroot}%{_unitdir}
 #mkdir -p %{buildroot}%{_mandir}/man8
 #install -m 0644 gwcli.8 %{buildroot}%{_mandir}/man8/
 #mkdir -p %{buildroot}%{_sysconfdir}/systemd/system/umstor-iscsi-proxy.service.d
