@@ -25,13 +25,8 @@ CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
 %{__python} setup.py install --skip-build --root %{buildroot} --install-scripts %{_bindir}
 mkdir -p %{buildroot}%{_unitdir}
 install -m 0644 ./systemd/autosnap.service %{buildroot}%{_unitdir}
-#mkdir -p %{buildroot}%{_mandir}/man8
-#install -m 0644 gwcli.8 %{buildroot}%{_mandir}/man8/
-#mkdir -p %{buildroot}%{_sysconfdir}/systemd/system/umstor-iscsi-proxy.service.d
-#install -m 0644 .%{_sysconfdir}/systemd/system/rbd-target-gw.service.d/dependencies.conf %{buildroot}%{_sysconfdir}/systemd/system/rbd-target-gw.service.d/
 
 %post
-#/bin/systemctl --system daemon-reload &> /dev/null || :
 /bin/systemctl --system enable autosnap &> /dev/null || :
 
 %postun
