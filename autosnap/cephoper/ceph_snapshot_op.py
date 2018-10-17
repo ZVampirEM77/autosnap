@@ -50,6 +50,7 @@ class CephSnaper(threading.Thread):
                                                                         image_name = image['image_name'],
                                                                         snap_name = snap['name'])
                                 CliOp.cli_op(delete_args.split(' '))
+                        # Only supportting day level currently
                         else:
                             snap_create_date = datetime.strptime(datetime.strptime(snap['timestamp'], '%a %b %d %H:%M:%S %Y') \
                                                     .strftime('%Y-%m-%d'), '%Y-%m-%d')
