@@ -74,7 +74,7 @@ class CephSnaper(threading.Thread):
                 last = datetime.strptime(last_snapshot, '%Y-%m-%d %H:%M')
             # if now - last < snapshot_period; we need not snapshot the image in this clock
             if image['last_snapshot'] == '-' or (now - last).seconds >= snapshot_period:
-                snap_name = Config.snapshot_prefix + now.strftime('%Y-%m-%d-%H:%M')
+                snap_name = Config.snapshot_prefix + datetime.now().strftime('%Y-%m-%d-%H:%M')
                 snap_args = SNAP_CMD['create'].format(pool_name = image['pool_name'], \
                                                  image_name = image['image_name'], \
                                                  snap_name = snap_name)
