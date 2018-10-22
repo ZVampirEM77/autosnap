@@ -1,5 +1,5 @@
 Name:		autosnap
-Version:	0.1
+Version:	0.1.1
 Release:	0%{?dist}
 Summary:>-------Automatlly snapshot tool
 Group:		Applications/System
